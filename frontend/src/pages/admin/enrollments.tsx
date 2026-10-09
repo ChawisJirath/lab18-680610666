@@ -134,6 +134,9 @@ export default function AdminEnrollmentsPage() {
     <div className="space-y-4">
       <div>
         <h1 className="text-xl font-semibold">จัดการการลงทะเบียน</h1>
+        <p className="text-sm text-muted-foreground">
+          Admin สามารถจัดการการลงทะเบียนให้นักศึกษาได้ทุกคน
+        </p>
       </div>
 
       <Dialog
@@ -223,7 +226,7 @@ export default function AdminEnrollmentsPage() {
 
       <div className="rounded-lg border">
         <Table>
-          <TableHeader>
+          <TableHeader className="bg-muted/50">
             <TableRow>
               <TableHead>รหัสนักศึกษา</TableHead>
               <TableHead>ชื่อ-นามสกุล</TableHead>

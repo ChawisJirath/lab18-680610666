@@ -15,8 +15,7 @@ export default function HomePage() {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-sm text-muted-foreground">
-            Lecture 18: เชื่อม Frontend (React) กับ Backend API (Express +
-            Prisma + MongoDB)
+            Lab 19
           </p>
           {role === "ADMIN" ? (
             <div className="flex flex-wrap gap-2">
@@ -44,7 +43,7 @@ export default function HomePage() {
       </Card>
 
       <p className="text-center text-xs text-muted-foreground">
-        จัดทำโดย ผู้สอน (Lecture)
+        จัดทำโดย Chawis Jirathitikul รหัสนักศึกษา 680610666
       </p>
     </div>
   );
