@@ -50,7 +50,7 @@ const port = process.env.PORT || 3000;
 //   }),
 // );
 app.use(cors({
-    origin: 'https://lab19-2569-frontend-teal.vercel.app/login',
+    origin: 'https://lab19-2569-frontend-teal.vercel.app',
     credentials: true
 }));
 
