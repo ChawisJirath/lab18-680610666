@@ -10,13 +10,7 @@ import notFoundMiddleware from "./middlewares/notFoundMiddleware.ts";
 
 // Check DB connection
 import { checkDatabaseConnection } from "./libs/checkDbConnection.ts";
-void checkDatabaseConnection().then((isReady) => {
-  if (!isReady) {
-    console.warn(
-      "⚠️ Database is not reachable yet. The server will keep running, but database-backed routes will fail until DATABASE_URL is fixed.",
-    );
-  }
-});
+checkDatabaseConnection();
 
 // import routers
 import studentRouter_v3 from "./routes/studentsRoutes_v3.ts";
@@ -28,34 +22,18 @@ import enrollmentRouter_v3 from "./routes/enrollmentsRouters_v3.ts";
 const app = express();
 const port = process.env.PORT || 3000;
 
-// CORS middleware: allow both local dev frontend and deployed frontend origins.
-// const allowedOrigins = (
-//   process.env.CORS_ORIGIN ??
-//   "http://localhost:5173,http://127.0.0.1:5173,https://lab19-frontend-680610666.vercel.app"
-// )
-//   .split(",")
-//   .map((origin) => origin.trim())
-//   .filter(Boolean);
-
+// CORS middleware: อนุญาตให้ Frontend (Vite dev server คนละ origin) เรียก API ได้
+// ตั้งค่า origin ได้หลายค่าคั่นด้วย "," ผ่าน CORS_ORIGIN ใน .env
 // app.use(
 //   cors({
-//     origin: (origin, callback) => {
-//       if (!origin || allowedOrigins.includes(origin)) {
-//         callback(null, true);
-//         return;
-//       }
-
-//       callback(new Error(`CORS blocked for origin: ${origin}`));
-//     },
-//     credentials: true,
-//     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-//     allowedHeaders: ["Content-Type", "Authorization"],
+//     origin: (process.env.CORS_ORIGIN || "http://localhost:5173").split(","),
 //   }),
 // );
 app.use(cors({
     origin: 'https://lab19-frontend-680610666.vercel.app',
     credentials: true
 }));
+
 // body parser middleware
 app.use(express.json());
 
@@ -76,9 +54,9 @@ app.get("/me", (req: Request, res: Response) => {
     success: true,
     message: "Student Information",
     data: {
-      studentId: "680610666",
-      firstName: "Chawis",
-      lastName: "Jirathitikul",
+      studentId: "600610999",
+      firstName: "Dome",
+      lastName: "Potikanond",
       program: "CPE",
       section: "001",
     },
