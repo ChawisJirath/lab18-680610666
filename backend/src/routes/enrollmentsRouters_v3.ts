@@ -117,7 +117,7 @@ router.post(
   },
 );
 
-// TODO การบ้าน 2.1: PUT /api/v3/enrollments, body = {studentId, courseId, newCourseId}
+// 3.1: PUT /api/v3/enrollments, body = {studentId, courseId, newCourseId}
 //   เปลี่ยนวิชาที่ลงทะเบียนไว้ (courseId → newCourseId)
 //   - ADMIN แก้ได้ทุกคน / STUDENT แก้ได้แค่ของตัวเอง (403)
 //   - validate body (400), ยังไม่ได้ลงวิชาเดิม (404), วิชาใหม่ = วิชาเดิม (400),
@@ -183,7 +183,7 @@ router.put(
   }
 );
 
-// TODO การบ้าน 2.2: DELETE /api/v3/enrollments, body = {studentId, courseId}
+//  3.2: DELETE /api/v3/enrollments, body = {studentId, courseId}
 //   ยกเลิกการลงทะเบียน (drop)
 //   - ADMIN ลบได้ทุกคน / STUDENT ลบได้แค่ของตัวเอง (403)
 //   - validate body (400), ไม่พบการลงทะเบียน (404)
