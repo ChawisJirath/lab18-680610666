@@ -8,10 +8,6 @@ import cors from "cors";
 import invalidJsonMiddleware from "./middlewares/invalidJsonMiddleware.ts";
 import notFoundMiddleware from "./middlewares/notFoundMiddleware.ts";
 
-// Check DB connection
-import { checkDatabaseConnection } from "./libs/checkDbConnection.ts";
-checkDatabaseConnection();
-
 // import routers
 import studentRouter_v3 from "./routes/studentsRoutes_v3.ts";
 import courseRouter_v3 from "./routes/coursesRouters_v3.ts";
@@ -22,17 +18,30 @@ import enrollmentRouter_v3 from "./routes/enrollmentsRouters_v3.ts";
 const app = express();
 const port = process.env.PORT || 3000;
 
-// CORS middleware: อนุญาตให้ Frontend (Vite dev server คนละ origin) เรียก API ได้
-// ตั้งค่า origin ได้หลายค่าคั่นด้วย "," ผ่าน CORS_ORIGIN ใน .env
-// app.use(
-//   cors({
-//     origin: (process.env.CORS_ORIGIN || "http://localhost:5173").split(","),
-//   }),
-// );
-app.use(cors({
-    origin: 'https://lab19-frontend-680610666.vercel.app',
-    credentials: true
-}));
+const allowedOrigins = new Set([
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+  "https://lab19-frontend-680610666.vercel.app",
+  ...(process.env.CORS_ORIGIN ?? "")
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean),
+]);
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.has(origin)) {
+        callback(null, true);
+        return;
+      }
+      callback(new Error(`CORS blocked for origin: ${origin}`));
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
 
 // body parser middleware
 app.use(express.json());
@@ -54,9 +63,9 @@ app.get("/me", (req: Request, res: Response) => {
     success: true,
     message: "Student Information",
     data: {
-      studentId: "600610999",
-      firstName: "Dome",
-      lastName: "Potikanond",
+      studentId: "680610666",
+      firstName: "Chawis",
+      lastName: "Jirathitikul",
       program: "CPE",
       section: "001",
     },
@@ -73,9 +82,11 @@ app.use("/api/v3/enrollments", enrollmentRouter_v3);
 // endpoint check middleware
 app.use(notFoundMiddleware);
 
-app.listen(port, () => {
-  console.log(`🚀 Server running on http://localhost:${port}`);
-});
+if (!process.env.VERCEL) {
+  app.listen(port, () => {
+    console.log(`🚀 Server running on http://localhost:${port}`);
+  });
+}
 
 // Export app for vercel deployment
 export default app;
