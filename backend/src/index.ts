@@ -70,7 +70,7 @@ app.get("/me", (req: Request, res: Response) => {
     success: true,
     message: "Student Information",
     data: {
-      studentId: "600610666",
+      studentId: "680610666",
       firstName: "Chawis",
       lastName: "Jirathitikul",
       program: "CPE",
