@@ -31,7 +31,7 @@ const port = process.env.PORT || 3000;
 // CORS middleware: allow both local dev frontend and deployed frontend origins.
 const allowedOrigins = (
   process.env.CORS_ORIGIN ??
-  "http://localhost:5173,http://127.0.0.1:5173,https://lab19-2569-frontend-teal.vercel.app"
+  "http://localhost:5173,http://127.0.0.1:5173,https://lab19-frontend-680610666.vercel.app"
 )
   .split(",")
   .map((origin) => origin.trim())
